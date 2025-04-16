@@ -1,34 +1,45 @@
 import express from "express";
 import * as dao from "./dao.js";
 
-const router = express.Router();
 
 export default function EnrollmentsRoutes(app) {
-  app.use("/api/enrollments", router);
 
-  router.post("/", (req, res) => {
-    const { userId, courseId } = req.body;
-    const enrollment = dao.enrollUserInCourse(userId, courseId);
-    if (enrollment) {
-      res.json(enrollment);
-    } else {
-      res.status(400).json({ error: "Already enrolled" });
-    }
-  });
-  
-  router.delete("/:userId/:courseId", (req, res) => {
-    const { userId, courseId } = req.params;
-    const result = dao.unenrollUserFromCourse(userId, courseId);
-    if (result) {
-      res.sendStatus(200);
-    } else {
-      res.status(404).json({ error: "Enrollment not found" });
-    }
-  });
+  const findAllEnrollments = async (req, res) => {
+    const enrollments = await dao.findAllEnrollments();
+    res.json(enrollments);
+  };
 
-  router.get("/user/:userId", (req, res) => {
+  const findEnrollmentsForUser = async (req, res) => {
     const { userId } = req.params;
-    const userEnrollments = dao.findEnrollmentsForUser(userId);
-    res.json(userEnrollments);
-  });
+    const enrollments = await dao.findEnrollmentsForUser(userId);
+    res.json(enrollments);
+  };
+
+  const findEnrollmentsForCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const enrollments = await dao.findEnrollmentsForCourse(courseId);
+    res.json(enrollments);
+  };
+
+  const findCoursesForUser = async (req, res) => {
+    const { userId } = req.params;
+    const enrollments = await dao.findEnrollmentsForUser(userId);
+    const courses = enrollments.map((enrollment) => enrollment.course);
+    res.json(courses);
+  };
+
+  const findUsersForCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const enrollments = await dao.findUsersForCourse(courseId);
+    const users = enrollments.filter((e) => e.user !== null).map((enrollment) => enrollment.user);
+    res.json(users);
+  };
+
+
+app.get("/api/enrollments", findAllEnrollments);
+  app.get("/api/users/:userId/enrollments", findEnrollmentsForUser);
+  app.get("/api/courses/:courseId/enrollments", findEnrollmentsForCourse);
+  app.get("/api/courses/:courseId/users", findUsersForCourse);
+  app.get("/api/users/:userId/courses", findCoursesForUser);
+
 }
