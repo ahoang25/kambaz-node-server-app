@@ -15,7 +15,7 @@ const app = express()
 app.use(
     cors({
       credentials: true,
-      origin: process.env.NETLIFY_URL || "https://legendary-jalebi-929f92.netlify.app",
+      origin: "https://legendary-jalebi-929f92.netlify.app",
     })
    );   
    const sessionOptions = {
