@@ -1,5 +1,4 @@
 import * as dao from "./dao.js";
-import express from "express";
 
 export default function AssignmentRoutes(app) {
   const createAssignment = async (req, res) => {

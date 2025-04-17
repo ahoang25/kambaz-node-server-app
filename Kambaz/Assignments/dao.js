@@ -1,12 +1,18 @@
 import model from "./model.js";
+import { v4 as uuidv4 } from "uuid";
 
 export async function createAssignment(courseId, assignment) {
-  const newAssignment = { ...assignment, course: courseId };
+  const newAssignment = {
+    _id: uuidv4(),
+    ...assignment,
+    course: courseId
+  };
   return await model.create(newAssignment);
 }
 
 export async function findAssignmentsForCourse(courseId) {
-  return await model.find({ course: courseId });
+  const assignments = await model.find({ course: courseId });
+  return assignments;
 }
 
 export async function updateAssignment(assignmentId, updatedAssignment) {

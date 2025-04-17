@@ -35,16 +35,6 @@ export default function CourseRoutes(app) {
   });
  
 
-  // app.post("/api/courses/:courseId/modules", async (req, res) => {
-  //   const { courseId } = req.params;
-  //   const module = {
-  //     ...req.body,
-  //     course: courseId,
-  //   };
-  //   const newModule = await modulesDao.createModule(module);
-  //   res.send(newModule);
-  // });
- 
 
   app.post("/api/courses", async (req, res) => {
     const course = await dao.createCourse(req.body);
@@ -52,36 +42,6 @@ export default function CourseRoutes(app) {
   });
  
 
-  // app.get("/api/courses/:courseId/modules", async (req, res) => {
-  //   const { courseId } = req.params;
-  //   const modules = await modulesDao.findModulesForCourse(courseId);
-  //   res.json(modules);
-  // });
- 
-
-  app.get("/api/courses/:courseId/assignments", (req, res) => {
-    const { courseId } = req.params;
-    const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
-    res.json(assignments);
-  });
-  
-  app.post("/api/courses/:courseId/assignments", (req, res) => {
-    const { courseId } = req.params;
-    const assignment = assignmentsDao.createAssignment(courseId, req.body);
-    res.json(assignment);
-  });
-
-  app.put("/api/courses/assignments/:assignmentId", (req, res) => {
-    const { assignmentId } = req.params;
-    const updated = assignmentsDao.updateAssignment(assignmentId, req.body);
-    res.json(updated);
-  });
-
-  app.delete("/api/courses/assignments/:assignmentId", (req, res) => {
-    const { assignmentId } = req.params;
-    const deleted = assignmentsDao.deleteAssignment(assignmentId);
-    res.json(deleted);
-  });
 
   app.get("/api/courses/:cid/users", findUsersForCourse);
 
