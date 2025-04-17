@@ -23,16 +23,14 @@ app.use(
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
   saveUninitialized: false,
-};
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
+  proxy: true, 
+  cookie: {
     sameSite: "none",
-    secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
-  };
-}
-app.use(session(sessionOptions));  
+    secure: true     
+  }
+};
+  
+  app.use(session(sessionOptions));  
   
 app.use(express.json());     
 UserRoutes(app);
