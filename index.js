@@ -15,7 +15,7 @@ const app = express()
 app.use(
     cors({
       credentials: true,
-      origin: "https://legendary-jalebi-929f92.netlify.app",
+      origin: process.env.NETLIFY_URL || "https://legendary-jalebi-929f92.netlify.app",
     })
    );   
    const sessionOptions = {
@@ -23,7 +23,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
   };
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV !== "production") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
       sameSite: "none",
