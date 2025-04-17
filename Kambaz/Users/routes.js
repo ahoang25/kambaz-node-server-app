@@ -79,14 +79,14 @@ export default function UserRoutes(app) {
   };
 
   const profile = (req, res) => {
+    console.log("SESSION:", req.session);  // 👀 See if session exists
     const currentUser = req.session["currentUser"];
     if (!currentUser) {
-      res.sendStatus(401);
-      return;
+      return res.sendStatus(401);
     }
     res.json(currentUser);
   };
-
+  
 
 
   const findCoursesForUser = async (req, res) => {
