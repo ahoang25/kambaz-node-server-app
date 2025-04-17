@@ -9,17 +9,17 @@ import ModuleRoutes from "./Kambaz/Modules/routes.js";
 import session from "express-session";
 import mongoose from "mongoose";
 
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
 mongoose.connect(CONNECTION_STRING);
 const app = express()
 app.use(
     cors({
       credentials: true,
-      origin: process.env.NETLIFY_URL || "https://legendary-jalebi-929f92.netlify.app",
+      origin: process.env.NETLIFY_URL ,
     })
    );   
    const sessionOptions = {
-    secret: process.env.SESSION_SECRET || "kambaz",
+    secret: process.env.SESSION_SECRET ,
     resave: false,
     saveUninitialized: false,
   };
