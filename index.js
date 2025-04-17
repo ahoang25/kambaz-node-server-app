@@ -23,14 +23,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
   };
-  if (process.env.NODE_ENV !== "production") {
-    sessionOptions.proxy = true;
+  if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1); 
     sessionOptions.cookie = {
       sameSite: "none",
       secure: true,
-      domain: process.env.NODE_SERVER_DOMAIN,
+      domain: process.env.NODE_SERVER_DOMAIN, 
     };
   }
+  
   app.use(session(sessionOptions));  
   
 app.use(express.json());     
