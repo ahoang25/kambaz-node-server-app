@@ -39,6 +39,12 @@ export default function QuizAttemptRoutes(app) {
     res.json({ count });
   };
 
+  const findAllAttempts = async (req, res) => {
+    const { qid, uid } = req.params;
+    const attempts = await dao.findAttemptsByUserAndQuiz(uid, qid);
+    res.json(attempts);
+  };
+  app.get("/api/attempts/:qid/:uid", findAllAttempts);
   app.post("/api/attempts/:qid/:uid", createAttempt);
   app.get("/api/attempts/:qid/:uid/last", findLastAttempt);
   app.get("/api/attempts/:qid/:uid/count", countAttempts);
