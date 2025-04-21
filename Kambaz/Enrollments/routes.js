@@ -41,7 +41,7 @@ export default function EnrollmentsRoutes(app) {
       const currentUser = req.session["currentUser"];
       uid = currentUser._id;
     }
-    const status = await enrollmentsDao.enrollUserInCourse(uid, cid);
+    const status = await dao.enrollUserInCourse(uid, cid);
     res.send(status);
   };
   const unenrollUserFromCourse = async (req, res) => {
@@ -50,7 +50,7 @@ export default function EnrollmentsRoutes(app) {
       const currentUser = req.session["currentUser"];
       uid = currentUser._id;
     }
-    const status = await enrollmentsDao.unenrollUserFromCourse(uid, cid);
+    const status = await dao.unenrollUserFromCourse(uid, cid);
     res.send(status);
   };
 

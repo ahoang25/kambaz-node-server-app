@@ -7,6 +7,9 @@ import CourseRoutes from "./Kambaz/Courses/routes.js";
 import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
 import ModuleRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentRoutes from './Kambaz/Assignments/routes.js';
+import QuizRoutes from './Kambaz/Quizzes/routes.js';
+import QuestionsRoutes from './Kambaz/Questions/routes.js';
+import QuizAttemptRoutes from './Kambaz/Quizzes/QuizAttempts/routes.js';
 import session from "express-session";
 import mongoose from "mongoose";
 
@@ -16,7 +19,7 @@ const app = express()
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NETLIFY_URL || "http://localhost:5173",
+    origin: process.env.NETLIFY_URL || "http://localhost:5174",
   })
  );   
  const sessionOptions = {
@@ -25,8 +28,8 @@ app.use(
   saveUninitialized: false,
   proxy: true, 
   cookie: {
-    sameSite: "none",
-    secure: true     
+    sameSite: "lax",
+    secure: false     
   }
 };
   
@@ -38,6 +41,9 @@ CourseRoutes(app);
 EnrollmentsRoutes(app);
 ModuleRoutes(app);
 AssignmentRoutes(app);
+QuizRoutes(app);
+QuizAttemptRoutes(app);
+QuestionsRoutes(app);
 Lab5(app)
 Hello(app)
 app.listen(process.env.PORT || 4000)
